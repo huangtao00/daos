@@ -240,6 +240,11 @@ dtx_handle_init(struct dtx_id *dti, daos_handle_t coh, daos_epoch_t epoch,
 	dth->dth_dti_cos = dti_cos;
 	dth->dth_dti_cos_cnt = dti_cos_cnt;
 
+	dth->dth_local_tx_started = 0;
+
+	/* XXX: Change it when handle multiple modifications. */
+	dth->dth_last_modification = 1;
+
 	memset(&dth->dth_intent, 0, sizeof(*dth) -
 	       offsetof(struct dtx_handle, dth_oid) + sizeof(dth->dth_oid));
 }

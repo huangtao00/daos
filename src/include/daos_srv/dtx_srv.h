@@ -92,7 +92,11 @@ struct dtx_handle {
 					 /* epoch conflict, need to renew. */
 					 dth_renew:1,
 					 /* The DTX entry is in active table. */
-					 dth_actived:1;
+					 dth_actived:1,
+					 /* Local TX is started. */
+					 dth_local_tx_started:1,
+					 /* The last sub-modification for DTX */
+					 dth_last_modification:1;
 
 	/* The generation when the DTX is handled on the server. */
 	uint64_t			 dth_gen;
