@@ -26,7 +26,6 @@
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <sys/xattr.h>
-#include <sys/sdt.h>
 
 #include <daos/checksum.h>
 #include <daos/common.h>
