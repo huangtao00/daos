@@ -193,6 +193,7 @@ struct migrate_pool_tls {
 	/* Service rank list for migrate fetch RPC */
 	d_rank_list_t		mpt_svc_list;
 
+	ABT_cond		mpt_done_cond;
 	/* Migrate status */
 	uint64_t		mpt_obj_count;
 	uint64_t		mpt_rec_count;

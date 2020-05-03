@@ -723,7 +723,7 @@ ds_iv_ns_destroy(void *ns)
 	if (iv_ns == NULL)
 		return;
 
-	D_DEBUG(DB_TRACE, "destroy ivns %d\n", iv_ns->iv_ns_id);
+	D_DEBUG(DB_MGMT, "destroy ivns %d\n", iv_ns->iv_ns_id);
 	iv_ns_destroy_internal(iv_ns);
 }
 
@@ -759,7 +759,7 @@ free:
 void
 ds_iv_ns_update(struct ds_iv_ns *ns, unsigned int master_rank)
 {
-	D_DEBUG(DB_TRACE, "update iv_ns %u master rank %u new master rank %u "
+	D_DEBUG(DB_MGMT, "update iv_ns %u master rank %u new master rank %u "
 		"myrank %u ns %p\n", ns->iv_ns_id, ns->iv_master_rank,
 		master_rank, dss_self_rank(), ns);
 	ns->iv_master_rank = master_rank;

@@ -85,6 +85,7 @@ ds_pool_child_put(struct ds_pool_child *child)
 	if (child->spc_ref == 0) {
 		D_DEBUG(DF_DSMS, DF_UUID": destroying\n",
 			DP_UUID(child->spc_uuid));
+		ABT_mutex_free(&child->spc_lock);
 		D_ASSERT(d_list_empty(&child->spc_list));
 		D_ASSERT(d_list_empty(&child->spc_cont_list));
 		vos_pool_close(child->spc_hdl);
@@ -163,13 +164,14 @@ pool_child_add_one(void *varg)
 	D_INIT_LIST_HEAD(&child->spc_cont_list);
 
 	d_list_add(&child->spc_list, &tls->dt_pool_list);
-
+	ABT_mutex_create(&child->spc_lock);
 	/* Load all containers */
 	rc = ds_cont_child_start_all(child);
 	if (rc) {
 		d_list_del_init(&child->spc_list);
 		ds_cont_child_stop_all(child);
 		vos_pool_close(child->spc_hdl);
+		ABT_mutex_free(&child->spc_lock);
 		D_FREE(child);
 		return rc;
 	}
@@ -452,7 +454,10 @@ ds_pool_stop(uuid_t uuid)
 		return;
 	if (pool->sp_stopping)
 		return;
+
 	pool->sp_stopping = true;
+	ds_rebuild_abort(pool->sp_uuid, -1);
+	ds_migrate_abort(pool->sp_uuid, -1);
 	ds_pool_put(pool); /* held by ds_pool_start */
 	ds_pool_put(pool);
 }

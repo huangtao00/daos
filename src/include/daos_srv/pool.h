@@ -94,6 +94,7 @@ struct ds_pool_child {
 	uuid_t		spc_uuid;	/* pool UUID */
 	d_list_t	spc_cont_list;
 
+	ABT_mutex	spc_lock;
 	/* The current maxim rebuild epoch, (0 if there is no rebuild), so
 	 * vos aggregation can not cross this epoch during rebuild to avoid
 	 * interferring rebuild process.
