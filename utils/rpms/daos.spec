@@ -77,7 +77,7 @@ Requires: libpmem1, libpmemobj1
 %endif
 Requires: fuse3 >= 3.4.2
 %if (0%{?suse_version} >= 1500)
-libfuse3 >= 3.4.2
+Requires: libfuse3 >= 3.4.2
 %else
 # because our repo has a deprecated fuse-3.x RPM, make sure we don't
 # get it when fuse3 Requires: /etc/fuse.conf
